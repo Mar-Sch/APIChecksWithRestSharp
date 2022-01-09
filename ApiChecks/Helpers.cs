@@ -49,5 +49,19 @@ namespace ApiChecks
             request.AddHeader("CanAccess", "true");
             return request;
         }
+
+        public static TodoItem GetTestTodoItem(string name = "mow the lawn", bool isComplete = false, DateTime dateDue = default(DateTime))
+        {
+            if(dateDue == default(DateTime))
+            {
+                dateDue = new DateTime(2022, 12, 31);
+            }
+            return new TodoItem
+            {
+                Name = name,
+                DateDue = dateDue,
+                IsComplete = isComplete
+            };            
+        }
     }
 }

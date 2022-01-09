@@ -53,12 +53,7 @@ namespace ApiChecks
         public void VerifyPostWithAllValidValuesReturns201()
         {
             //Arrange
-            TodoItem expectedItem = new TodoItem
-            {
-                Name = "mow the lawn",
-                DateDue = new DateTime(2022, 02, 15),
-                IsComplete = false
-            };
+            TodoItem expectedItem = Helpers.GetTestTodoItem();
             var request = Helpers.PostTodoItemRequest(expectedItem);
             
             //Act
@@ -88,23 +83,9 @@ namespace ApiChecks
         {
             get
             {
-                yield return new TestCaseData(new TodoItem
-                {
-                    Name = "Mow Uki's lawn",
-                    DateDue = new DateTime(2022, 02, 15),
-                    IsComplete = false
-                }).Returns("NoContent");
-                yield return new TestCaseData(new TodoItem
-                {
-                    Name = "",
-                    DateDue = new DateTime(2022, 02, 15),
-                    IsComplete = false
-                }).Returns("BadRequest");
-                yield return new TestCaseData(new TodoItem
-                {
-                    DateDue = new DateTime(2022, 02, 15),
-                    IsComplete = false
-                }).Returns("BadRequest");
+                yield return new TestCaseData(Helpers.GetTestTodoItem()).Returns("NoContent");
+                yield return new TestCaseData(Helpers.GetTestTodoItem(name: "")).Returns("BadRequest");
+                yield return new TestCaseData(Helpers.GetTestTodoItem(name: "")).Returns("BadRequest");
             }
         }
     }
