@@ -8,18 +8,8 @@ using System.Net;
 namespace ApiChecks
 {
     [TestFixture]
-    public class APIChecksClass
-    {
-        private static string _baseUrl;
-        private static RestClient _client;
-
-        [OneTimeSetUp]
-        public void TestClassInitialize()
-        {
-            _baseUrl = "https://localhost:44367/api/Todo";
-            _client = new RestClient(_baseUrl);
-        }
-
+    public class APIChecksClass : ApiChecksBase
+    {        
         [Test]
         public void VerifyGetAllTodoItemsReturns200()
         {
@@ -69,9 +59,9 @@ namespace ApiChecks
         {
             get
             {
-                yield return new TestCaseData(Helpers.GetTestTodoItem()).Returns("NoContent");
-                yield return new TestCaseData(Helpers.GetTestTodoItem(name: "")).Returns("BadRequest");
-                yield return new TestCaseData(Helpers.GetTestTodoItem(name: "")).Returns("BadRequest");
+                yield return new TestCaseData(Helpers.GetTestTodoItem()).Returns("NoContent").SetName("happy path");
+                yield return new TestCaseData(Helpers.GetTestTodoItem(name: "")).Returns("BadRequest").SetName("blank name");
+                yield return new TestCaseData(Helpers.GetTestTodoItem(name: "")).Returns("BadRequest").SetName("missing name field");
             }
         }
     }

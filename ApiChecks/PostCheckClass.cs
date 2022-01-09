@@ -8,19 +8,10 @@ using System.Net;
 namespace ApiChecks
 {
     [TestFixture]
-    public class PostChecksClass
+    public class PostChecksClass : ApiChecksBase
     {
-        private static string _baseUrl;
-        private static RestClient _client;
         private TodoItem testItem;
-
-        [OneTimeSetUp]
-        public void TestClassInitialize()
-        {
-            _baseUrl = "https://localhost:44367/api/Todo";
-            _client = new RestClient(_baseUrl);
-        }
-
+       
         [TearDown]
         public void TestDataCleanUp()
         {

@@ -8,19 +8,9 @@ using System.Net;
 namespace ApiChecks
 {    
     [TestFixture]
-    public class DeleteChecks
+    public class DeleteChecks : ApiChecksBase
     {
         private TodoItem testItem;
-
-        private static string _baseUrl;
-        private static RestClient _client;
-
-        [OneTimeSetUp]
-        public void TestClassInitialize()
-        {
-            _baseUrl = "https://localhost:44367/api/Todo";
-            _client = new RestClient(_baseUrl);
-        }
 
         [SetUp]
         public void TestDataSetup()
@@ -32,7 +22,6 @@ namespace ApiChecks
             IRestResponse<TodoItem> response = _client.Execute<TodoItem>(request);
             testItem = response.Data;
         }
-
 
         [Test]
         public void VerifyDeleteWithValidIdReturns204()
