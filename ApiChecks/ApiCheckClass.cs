@@ -49,20 +49,6 @@ namespace ApiChecks
             StringAssert.AreEqualIgnoringCase("Walk the dog", response.Data.Name, $"Name should have been 'Walk the dog', but was {response.Data.Name}");
         }
 
-        [Test]
-        public void VerifyPostWithAllValidValuesReturns201()
-        {
-            //Arrange
-            TodoItem expectedItem = Helpers.GetTestTodoItem();
-            var request = Helpers.PostTodoItemRequest(expectedItem);
-            
-            //Act
-            IRestResponse response = _client.Execute(request);
-
-            //Assert
-            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode, $"Post new todo item should have returned 201, but returned {response.StatusCode} instead");
-        }
-
         [Test, TestCaseSource(typeof(TestDataClass), "PutTestData")]
         public string VerifyPut(TodoItem item)
         {
