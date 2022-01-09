@@ -31,11 +31,7 @@ namespace ApiChecks
                 DateDue = new DateTime(2022, 02, 15),
                 IsComplete = false
             };
-            var request = new RestRequest(Method.POST);
-
-            request.RequestFormat = DataFormat.Json;
-            request.AddJsonBody(item);
-            request.AddHeader("CanAccess", "true");
+            var request = Helpers.PostTodoItemRequest(item);
 
             //Act
             IRestResponse<TodoItem> response = _client.Execute<TodoItem>(request);
@@ -47,9 +43,7 @@ namespace ApiChecks
         public void VerifyDeleteWithValidIdReturns204()
         {
             //Arrange
-            var request = new RestRequest($"{testItem.Id}", Method.DELETE);
-            request.AddUrlSegment("id", testItem.Id);
-            request.AddHeader("CanAccess", "true");
+            var request = Helpers.DeleteTodoItemRequest(testItem.Id);
             //Act
             IRestResponse response = _client.Execute(request);
 

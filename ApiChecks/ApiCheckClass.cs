@@ -23,11 +23,9 @@ namespace ApiChecks
         [Test]
         public void VerifyGetAllTodoItemsReturns200()
         {
-            //arrange
-            var request = new RestRequest(Method.GET);
 
             //act
-            IRestResponse response = _client.Execute(request);
+            IRestResponse response = _client.Execute(Helpers.GetAllTodoItemsRequest());
 
             //assert
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode, $"GET all todo items did not return a success status code; it returned {response.StatusCode}");
@@ -38,8 +36,7 @@ namespace ApiChecks
         {
             //Arrange
             var expectedId = 1;
-            var request = new RestRequest($"{expectedId}", Method.GET);
-            request.AddUrlSegment("id", expectedId);
+            var request = Helpers.GetSingleTodoItemRequest(expectedId);
 
             //Act
             IRestResponse<TodoItem> response = _client.Execute<TodoItem>(request);
@@ -62,11 +59,7 @@ namespace ApiChecks
                 DateDue = new DateTime(2022, 02, 15),
                 IsComplete = false
             };
-            var request = new RestRequest(Method.POST);
-
-            request.RequestFormat = DataFormat.Json;
-            request.AddJsonBody(expectedItem);
-            request.AddHeader("CanAccess", "true");
+            var request = Helpers.PostTodoItemRequest(expectedItem);
             
             //Act
             IRestResponse response = _client.Execute(request);
@@ -79,12 +72,7 @@ namespace ApiChecks
         public string VerifyPut(TodoItem item)
         {
             //Arrange
-            var request = new RestRequest($"{1}", Method.PUT);
-            request.AddUrlSegment("id", 1);
-
-            request.RequestFormat = DataFormat.Json;
-            request.AddJsonBody(item);
-            request.AddHeader("CanAccess", "true");
+            var request = Helpers.PutTodoItemRequest(1, item);
 
             //Act
             IRestResponse response = _client.Execute(request);
